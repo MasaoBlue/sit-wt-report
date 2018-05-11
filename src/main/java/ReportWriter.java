@@ -20,7 +20,7 @@ public class ReportWriter {
       OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
       ContainerTag[] tbodyInner = testScripts.stream().map((t) ->  
         tr(
-          th(t.formatScriptInfo()),
+          td(t.formatScriptInfo()),
           td(t.formatStepCount())
         )
       ).toArray(ContainerTag[]::new);
@@ -32,6 +32,13 @@ public class ReportWriter {
         ),
         body(
           table(
+            attrs(".table"),
+            thead(
+              tr(
+                th("TestScript").attr("scope='col'"),
+                th("StepCount").attr("scope='col'")
+              )
+            ),
             tbody(tbodyInner)
           )
         )
