@@ -8,10 +8,10 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>${title}</title>
   </head>
   <body>
-    <h1>Hello, world!</h1>
+    <h1>${title}</h1>
 
     <table class="table">
       <thead>
@@ -21,22 +21,12 @@
         </tr>
       </thead>
       <tbody>
+	    <#list scripts as script>
         <tr>
-          <td>testscript\SampleTestScript.xlsx ケース_001</td>
-          <td>15</td>
+          <td>${script.formattedScriptInfo()}</td>
+          <td>${script.formattedStepCount()}</td>
         </tr>
-        <tr>
-          <td>testscript\SampleTestScript.xlsx ケース_002</td>
-          <td>12</td>
-        </tr>
-        <tr>
-          <td>testscript\SampleTestScript2.xlsx ケース_001</td>
-          <td>15</td>
-        </tr>
-        <tr>
-          <td>testscript\SampleTestScript2.xlsx ケース_002</td>
-          <td>12</td>
-        </tr>
+	    </#list>
       </tbody>
     </table>
   

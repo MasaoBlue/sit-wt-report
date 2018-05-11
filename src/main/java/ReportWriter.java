@@ -1,56 +1,41 @@
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import j2html.tags.ContainerTag;
-
-import static j2html.TagCreator.*;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 
 public class ReportWriter {
 
   public void write(List<TestScript> testScripts, Path reportFile) {
+    OutputStreamWriter writer;
+    FileOutputStream outputStream;
     try {
-      FileOutputStream outputStream = new FileOutputStream(reportFile.toString());
-      
-      OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
-      ContainerTag[] tbodyInner = testScripts.stream().map((t) ->  
-        tr(
-          td(t.formatScriptInfo()),
-          td(t.formatStepCount())
-        )
-      ).toArray(ContainerTag[]::new);
-      String str = html(
-        head(
-          title("Title"),
-          link().withRel("stylesheet").withHref("https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"),
-          meta().withCharset("UTF-8")
-        ),
-        body(
-          table(
-            attrs(".table"),
-            thead(
-              tr(
-                th("TestScript").attr("scope='col'"),
-                th("StepCount").attr("scope='col'")
-              )
-            ),
-            tbody(tbodyInner)
-          )
-        )
-      ).renderFormatted();
-      
-      writer.write(str);
-      
-      writer.close();
-    } catch(java.io.IOException e){
-      System.out.println("ReportWrite failed:" + e);
-    } finally {
-      
+      outputStream = new FileOutputStream(reportFile.toString());
+      writer = new OutputStreamWriter(outputStream, "UTF-8");
+    
+      try {
+        Configuration cfg = new Configuration();
+        
+        Map<String, Object> input = new HashMap<String, Object>();
+
+        input.put("title", "Hello, world!");
+        input.put("scripts", testScripts);
+        
+        Template template = cfg.getTemplate("template.ftl");
+        
+        template.process(input, writer);
+      } catch(TemplateException e){
+        e.printStackTrace();
+      } finally {
+        writer.close();      
+      }
+    } catch (java.io.IOException e) {
+      e.printStackTrace();
     }
   }
   

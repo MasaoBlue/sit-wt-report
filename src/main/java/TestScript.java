@@ -9,11 +9,11 @@ public class TestScript {
     this.filePath = filePath;
   }
   
-  public String formatScriptInfo() {
+  public String formattedScriptInfo() {
     return filePath + " " + caseName;
   }
 
-  public String formatStepCount() {
+  public String formattedStepCount() {
     return stepCount + ""; 
   }
 
