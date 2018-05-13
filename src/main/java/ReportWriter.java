@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Path;
@@ -5,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import freemarker.cache.FileTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -19,7 +21,8 @@ public class ReportWriter {
       writer = new OutputStreamWriter(outputStream, "UTF-8");
     
       try {
-        Configuration cfg = new Configuration();
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_23);
+        cfg.setTemplateLoader(new FileTemplateLoader(new File("reportTemplate")));
         
         Map<String, Object> input = new HashMap<String, Object>();
 

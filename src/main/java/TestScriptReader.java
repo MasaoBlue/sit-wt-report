@@ -29,47 +29,44 @@ public class TestScriptReader {
   // excelに記載されているスクリプトをパースする
   private void parseScript(String path, List<TestScript> testScripts) {
     try {
-      //xlsxの場合はこちらを有効化
       FileInputStream fileIn = new FileInputStream(path);
-      Workbook wb = new XSSFWorkbook(fileIn);
-      
-      Sheet sheet = wb.getSheetAt(0);
-      Row headerRow = sheet.getRow(0);
-      
-      Iterator<Cell> cellIterator = headerRow.cellIterator();
-      
-      String pattern = "^ケース_\\d+$";
-      Pattern p = Pattern.compile(pattern);
-      while (cellIterator.hasNext()) {
-        Cell headerCell = cellIterator.next();
-        // ケースを記述する列が見つかったら下方向にセルを辿る
-        String caseName = headerCell.getStringCellValue();
-        if(p.matcher(caseName).find()){
-          int cellIndex = headerCell.getColumnIndex();
-          System.out.println(path + ": " + cellIndex);
-          
-          Iterator<Row> rowIterator = sheet.rowIterator();
-          int count = 0;
-          while(rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            Cell cell = row.getCell(cellIndex);
-            if(cell == null) continue;
-            String val = cell.getStringCellValue();
-            if(val != null && val.length() > 0) {
-              count++;
-            };
+      try(Workbook wb = new XSSFWorkbook(fileIn)) { 
+        Sheet sheet = wb.getSheetAt(0);
+        Row headerRow = sheet.getRow(0);
+        
+        Iterator<Cell> cellIterator = headerRow.cellIterator();
+        
+        String pattern = "^ケース_\\d+$";
+        Pattern p = Pattern.compile(pattern);
+        while (cellIterator.hasNext()) {
+          Cell headerCell = cellIterator.next();
+          // ケースを記述する列が見つかったら下方向にセルを辿る
+          String caseName = headerCell.getStringCellValue();
+          if(p.matcher(caseName).find()){
+            int cellIndex = headerCell.getColumnIndex();
+            System.out.println(path + ": " + cellIndex);
+            
+            Iterator<Row> rowIterator = sheet.rowIterator();
+            int count = 0;
+            while(rowIterator.hasNext()) {
+              Row row = rowIterator.next();
+              Cell cell = row.getCell(cellIndex);
+              if(cell == null) continue;
+              String val = cell.getStringCellValue();
+              if(val != null && val.length() > 0) {
+                count++;
+              };
+            }
+            
+            TestScript script = new TestScript(caseName, count, path);
+            testScripts.add(script);
           }
-          
-          TestScript script = new TestScript(caseName, count, path);
-          testScripts.add(script);
         }
+        
+        fileIn.close();
       }
-      
-      fileIn.close();
     }catch (Exception e) {
-        e.printStackTrace();
-    } finally {
-         
+      e.printStackTrace();
     }
   }
   
