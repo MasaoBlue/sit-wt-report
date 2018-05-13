@@ -44,7 +44,6 @@ public class TestScriptReader {
           String caseName = headerCell.getStringCellValue();
           if(p.matcher(caseName).find()){
             int cellIndex = headerCell.getColumnIndex();
-            System.out.println(path + ": " + cellIndex);
             
             Iterator<Row> rowIterator = sheet.rowIterator();
             int count = 0;
