@@ -5,10 +5,7 @@ import org.springframework.context.annotation.Configuration;
 public class AppContext {
     @Bean
     public ReportGenerator reportGenerator() {
-        ReportGenerator generator = new ReportGenerator();
-        generator.setReader(testScriptReader());
-        generator.setWriter(reportWriter());
-        return generator;
+        return new ReportGenerator();
     }
  
     @Bean
