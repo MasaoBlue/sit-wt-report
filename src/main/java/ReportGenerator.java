@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /** 
- * ƒeƒXƒgƒXƒNƒŠƒvƒg‚ÌƒŒƒ|[ƒg‚ğ¶¬‚·‚é
+ * ãƒ†ã‚¹ãƒˆã‚¹ã‚¯ãƒªãƒ—ãƒˆã®ãƒ¬ãƒãƒ¼ãƒˆã‚’ç”Ÿæˆã™ã‚‹
  * 
  * @author masao
  */
@@ -14,7 +14,7 @@ public class ReportGenerator {
   ReportWriter writer;
 
   /**
-   * ƒƒCƒ“ˆ—
+   * ãƒ¡ã‚¤ãƒ³å‡¦ç†
    */
   public static void main(String[] args) {
     try(AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppContext.class)){
@@ -26,21 +26,21 @@ public class ReportGenerator {
   }
   
   /**
-   * ƒeƒXƒgƒXƒNƒŠƒvƒg‚ğ“Ç‚İ‚ŞBean‚ğİ’è
+   * ãƒ†ã‚¹ãƒˆã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’èª­ã¿è¾¼ã‚€Beanã‚’è¨­å®š
    */
   public void setReader(TestScriptReader reader) {
     this.reader = reader;
   }
 
   /**
-   * Œ‹‰Ê‚Ìhtml‚ğo—Í‚·‚éBean‚ğİ’è
+   * çµæœã®htmlã‚’å‡ºåŠ›ã™ã‚‹Beanã‚’è¨­å®š
    */
   public void setWriter(ReportWriter writer) {
     this.writer = writer;
   }
 
   /**
-   * ƒeƒXƒgƒXƒNƒŠƒvƒg‚ğ“Ç‚İ‚ñ‚ÅŒ‹‰Ê‚ğo—Í‚·‚é
+   * ãƒ†ã‚¹ãƒˆã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’èª­ã¿è¾¼ã‚“ã§çµæœã‚’å‡ºåŠ›ã™ã‚‹
    */
   public void generate(Path targetDir, Path reportFile) {
     List<TestScript> testScripts = reader.readRecursively(targetDir, reportFile);

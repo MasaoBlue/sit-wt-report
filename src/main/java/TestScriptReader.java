@@ -14,7 +14,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class TestScriptReader {
   
-  // ƒfƒBƒŒƒNƒgƒŠ“à‚ÌƒeƒXƒgƒXƒNƒŠƒvƒgƒtƒ@ƒCƒ‹‚ğ‚·‚×‚Ä“Ç‚İ‚Ş
+  // ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå†…ã®ãƒ†ã‚¹ãƒˆã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã™ã¹ã¦èª­ã¿è¾¼ã‚€
   public List<TestScript> readRecursively(Path targetDir, Path reportFile) {
     List<TestScript> testScripts = new ArrayList<TestScript>();
 
@@ -26,7 +26,7 @@ public class TestScriptReader {
     return testScripts;
   }
   
-  // excel‚É‹LÚ‚³‚ê‚Ä‚¢‚éƒXƒNƒŠƒvƒg‚ğƒp[ƒX‚·‚é
+  // excelã«è¨˜è¼‰ã•ã‚Œã¦ã„ã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ãƒ‘ãƒ¼ã‚¹ã™ã‚‹
   private void parseScript(String path, List<TestScript> testScripts) {
     try {
       FileInputStream fileIn = new FileInputStream(path);
@@ -36,11 +36,11 @@ public class TestScriptReader {
         
         Iterator<Cell> cellIterator = headerRow.cellIterator();
         
-        String pattern = "^ƒP[ƒX_\\d+$";
+        String pattern = "^ã‚±ãƒ¼ã‚¹_\\d+$";
         Pattern p = Pattern.compile(pattern);
         while (cellIterator.hasNext()) {
           Cell headerCell = cellIterator.next();
-          // ƒP[ƒX‚ğ‹Lq‚·‚é—ñ‚ªŒ©‚Â‚©‚Á‚½‚ç‰º•ûŒü‚ÉƒZƒ‹‚ğ’H‚é
+          // ã‚±ãƒ¼ã‚¹ã‚’è¨˜è¿°ã™ã‚‹åˆ—ãŒè¦‹ã¤ã‹ã£ãŸã‚‰ä¸‹æ–¹å‘ã«ã‚»ãƒ«ã‚’è¾¿ã‚‹
           String caseName = headerCell.getStringCellValue();
           if(p.matcher(caseName).find()){
             int cellIndex = headerCell.getColumnIndex();
